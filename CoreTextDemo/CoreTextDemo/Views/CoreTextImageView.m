@@ -95,10 +95,12 @@
     //初始化CTRun回调代理
     CTRunDelegateRef delegate = CTRunDelegateCreate(&callBacks, (__bridge void *)sizeStr);
     //先设置一个占位的空格
-    NSMutableAttributedString * imageAttachment = [[NSMutableAttributedString alloc] initWithString:@" "];
+    unichar placeHolder = 0xFFFC;
+    NSString * placeHolderStr = [NSString stringWithCharacters:&placeHolder length:1];
+    NSMutableAttributedString * imageAttachment = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@ ", placeHolderStr]];
     //设置图片名
-    [imageAttachment addAttribute:@"imageName" value:imageName range:(NSMakeRange(0, 1))];
-    CFAttributedStringSetAttribute((CFMutableAttributedStringRef)imageAttachment, CFRangeMake(0, 1), kCTRunDelegateAttributeName, delegate);
+    [imageAttachment addAttribute:@"imageName" value:imageName range:(NSMakeRange(1, 1))];
+    CFAttributedStringSetAttribute((CFMutableAttributedStringRef)imageAttachment, CFRangeMake(1, 1), kCTRunDelegateAttributeName, delegate);
     CFRelease(delegate);
     
     return imageAttachment;

@@ -38,7 +38,7 @@
     CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, [att length]), path , NULL);
     
     //7.1直接绘制
-    CTFrameDraw(frame, context);
+//    CTFrameDraw(frame, context);
     //7.2 遍历所有的行进行绘制
 //    CFArrayRef lines = CTFrameGetLines(frame);
 //    CFIndex lineNumber =  CFArrayGetCount(lines);
@@ -50,20 +50,20 @@
 //        CTLineDraw(line , context);
 //    }
     //7.3 遍历本行的CTRun进行绘制
-//    CFArrayRef lines = CTFrameGetLines(frame);
-//    CFIndex lineNumber =  CFArrayGetCount(lines);
-//    CGPoint lineOrigins[lineNumber];
-//    CTFrameGetLineOrigins(frame, CFRangeMake(0, 0), lineOrigins);
-//    for (int i = 0 ; i < CFArrayGetCount(lines); i++) {
-//        CTLineRef line = CFArrayGetValueAtIndex(lines, i);
-//        CGContextSetTextPosition(context, lineOrigins[i].x, lineOrigins[i].y);
-//        CFArrayRef runs = CTLineGetGlyphRuns(line);
-//        CFIndex runNumber = CFArrayGetCount(runs);
-//        for (int j = 0; j < runNumber; j++) {
-//            CTRunRef run = CFArrayGetValueAtIndex(runs, j);
-//            CTRunDraw(run, context, CFRangeMake(0, 0));
-//        }
-//    }
+    CFArrayRef lines = CTFrameGetLines(frame);
+    CFIndex lineNumber =  CFArrayGetCount(lines);
+    CGPoint lineOrigins[lineNumber];
+    CTFrameGetLineOrigins(frame, CFRangeMake(0, 0), lineOrigins);
+    for (int i = 0 ; i < CFArrayGetCount(lines); i++) {
+        CTLineRef line = CFArrayGetValueAtIndex(lines, i);
+        CGContextSetTextPosition(context, lineOrigins[i].x, lineOrigins[i].y);
+        CFArrayRef runs = CTLineGetGlyphRuns(line);
+        CFIndex runNumber = CFArrayGetCount(runs);
+        for (int j = 0; j < runNumber; j++) {
+            CTRunRef run = CFArrayGetValueAtIndex(runs, j);
+            CTRunDraw(run, context, CFRangeMake(0, 0));
+        }
+    }
     
     //8.释放之前申请的内存
     CFRelease(path);
